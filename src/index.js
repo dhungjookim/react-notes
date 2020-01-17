@@ -1,7 +1,9 @@
 import './style.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Route, NavLink, Switch,
+} from 'react-router-dom';
 
 const Nav = (props) => {
   return (
@@ -40,10 +42,12 @@ const App = (props) => {
     <Router>
       <div>
         <Nav />
-        <Route exact path="/" component={Welcome} />
-        <Route path="/about" component={About} />
-        <Route exact path="/test/:id" component={Test} />
-        <Route exact component={Fallback} />
+        <Switch>
+          <Route exact path="/" component={Welcome} />
+          <Route path="/about" component={About} />
+          <Route exact path="/test/:id" component={Test} />
+          <Route exact component={Fallback} />
+        </Switch>
       </div>
     </Router>
   );
