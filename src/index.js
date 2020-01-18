@@ -1,57 +1,42 @@
-import './style.scss';
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router, Route, NavLink, Switch,
-} from 'react-router-dom';
+import './style.scss';
+import SearchBar from './components/search_bar';
+import youtubeSearch from './youtube-api';
+import VideoList from './components/video_list';
+import VideoDetail from './components/video_detail';
 
-const Nav = (props) => {
-  return (
-    <nav>
-      <ul>
-        <li><NavLink to="/" exact>Home</NavLink></li>
-        <li><NavLink to="/about">About</NavLink></li>
-        <li><NavLink to="/test/id1" exact>test id1</NavLink></li>
-        <li><NavLink to="/test/id2">test id2</NavLink></li>
-      </ul>
-    </nav>
-  );
-};
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-const About = (props) => {
-  return <div> All there is to know about me </div>;
-};
-const Welcome = (props) => {
-  return (
-    <div>
-      <div>Welcome</div>
-    </div>
-  );
-};
+    this.state = {
+      videos: [],
+      selectedVideo: null,
+    };
 
-const Test = (props) => {
-  return <div> ID: {props.match.params.id} </div>;
-};
+    youtubeSearch('pixar').then((videos) => {
+      this.setState({
+        videos,
+        selectedVideo: videos[0],
+      });
+    });
+  }
 
-const Fallback = (props) => {
-  return <div>URL Not Found</div>;
-};
-
-const App = (props) => {
-  return (
-    <Router>
+  render() {
+    console.log('returningnghgdh');
+    return (
       <div>
-        <Nav />
-        <Switch>
-          <Route exact path="/" component={Welcome} />
-          <Route path="/about" component={About} />
-          <Route exact path="/test/:id" component={Test} />
-          <Route exact component={Fallback} />
-        </Switch>
+        <SearchBar />
+        <VideoDetail video={this.state.selectedVideo} />
+        <VideoList
+          onVideoSelect={(selectedVideo) => this.setState({ selectedVideo })}
+          videos={this.state.videos}
+        />
       </div>
-    </Router>
-  );
-};
+    );
+  }
+}
 
 
 ReactDOM.render(<App />, document.getElementById('main'));
