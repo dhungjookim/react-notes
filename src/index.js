@@ -15,7 +15,11 @@ class App extends Component {
       selectedVideo: null,
     };
 
-    youtubeSearch('pixar').then((videos) => {
+    this.search('pixar');
+  }
+
+  search = (text) => {
+    youtubeSearch(text).then((videos) => {
       this.setState({
         videos,
         selectedVideo: videos[0],
@@ -27,7 +31,7 @@ class App extends Component {
     console.log('returningnghgdh');
     return (
       <div>
-        <SearchBar />
+        <SearchBar onSearchChange={this.search} />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
           onVideoSelect={(selectedVideo) => this.setState({ selectedVideo })}
