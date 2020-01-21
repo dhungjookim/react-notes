@@ -1,42 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './style.scss';
-import SearchBar from './components/search_bar';
-import youtubeSearch from './youtube-api';
-import VideoList from './components/video_list';
-import VideoDetail from './components/video_detail';
+import { Map } from 'immutable';
+
+/* eslint new-cap: ["error", { "capIsNew": false }] */
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      videos: [],
-      selectedVideo: null,
+      notes: Map(),
     };
-
-    this.search('pixar');
-  }
-
-  search = (text) => {
-    youtubeSearch(text).then((videos) => {
-      this.setState({
-        videos,
-        selectedVideo: videos[0],
-      });
-    });
   }
 
   render() {
     console.log('returningnghgdh');
     return (
       <div>
-        <SearchBar onSearchChange={this.search} />
-        <VideoDetail video={this.state.selectedVideo} />
-        <VideoList
-          onVideoSelect={(selectedVideo) => this.setState({ selectedVideo })}
-          videos={this.state.videos}
-        />
+        <h1>{this.state.notes[0].title}</h1>
+        <p>{this.state.notes[0].text}</p>
       </div>
     );
   }
