@@ -4,7 +4,14 @@ class Note extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: 'default title',
+      id: '0',
+      note: {
+        title: '',
+        text: '',
+        x: 0,
+        y: 0,
+        zIndex: 0,
+      },
     };
   }
 
